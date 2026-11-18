@@ -946,152 +946,297 @@ function viewTechno(b){
 /* ---------- Générateur d'appréciations techno ---------- */
 const BAV_LABELS = ["Aucun","Ponctuels","Réguliers","Fréquents","Perturbe le cours"];
 const GEN = {
-  /* appréciations sans prénom (lycée) */
-  resAnon: [
-    ["Résultats très insuffisants en SVT.", "Trimestre difficile : les notions essentielles ne sont pas acquises.", "Les acquis restent très insuffisants en SVT.", "Résultats préoccupants ce trimestre.", "Les bases attendues ne sont pas acquises.", "De grosses lacunes apparaissent dans les évaluations.", "Le niveau reste très en dessous des attentes en SVT.", "Trimestre très insuffisant en SVT."],
-    ["Résultats fragiles en SVT.", "Trimestre en demi-teinte : plusieurs notions restent à acquérir.", "Des difficultés persistent sur une partie des notions.", "Résultats un peu justes, les bases doivent être consolidées.", "Le niveau attendu n’est pas encore atteint en SVT.", "Les acquis restent fragiles ce trimestre.", "La moyenne n’est pas encore atteinte en SVT.", "Ensemble encore insuffisant, malgré quelques réussites."],
-    ["Résultats corrects en SVT.", "Trimestre assez satisfaisant, mais les acquis restent à consolider.", "L’essentiel est compris, certaines notions restent fragiles.", "Les bases sont acquises, une progression reste possible.", "Ensemble correct, avec une marge de progression réelle.", "Résultats tout juste satisfaisants en SVT.", "Niveau correct en SVT, sans plus.", "La moyenne est atteinte, il est possible de viser plus haut."],
-    ["Bons résultats en SVT.", "Trimestre satisfaisant en SVT.", "Résultats satisfaisants, les bases sont acquises.", "Travail sérieux qui porte ses fruits.", "Bon ensemble ce trimestre en SVT.", "Trimestre sérieux et acquis solides.", "Résultats satisfaisants, l’essentiel est maîtrisé.", "Bonne progression et bons résultats en SVT."],
-    ["Très bons résultats en SVT.", "Très bon trimestre : les notions sont bien comprises.", "Résultats très satisfaisants en SVT.", "Travail de qualité et acquis solides.", "Très bon niveau, les compétences sont bien maîtrisées.", "Résultats de très bonne tenue en SVT.", "Bonne maîtrise des notions du trimestre.", "Très bon travail en SVT ce trimestre."],
-    ["Excellents résultats en SVT.", "Excellent trimestre en SVT.", "Résultats excellents : les notions sont parfaitement maîtrisées.", "Très beau parcours, avec des résultats remarquables.", "Très beau travail, les compétences sont solidement acquises.", "Résultats remarquables en SVT.", "Trimestre brillant en SVT.", "Excellent niveau et travail de grande qualité."]
+ "resAnon": [
+  [
+   "Résultats très insuffisants en SVT.",
+   "Trimestre difficile : les notions essentielles ne sont pas acquises.",
+   "Les acquis restent très insuffisants en SVT.",
+   "Résultats préoccupants ce trimestre.",
+   "Les bases attendues ne sont pas acquises.",
+   "De grosses lacunes apparaissent dans les évaluations.",
+   "Le niveau reste très en dessous des attentes en SVT.",
+   "Trimestre très insuffisant en SVT."
   ],
-  res: [
-    [ "Les résultats {deP} sont insuffisants en SVT.",
-      "Trimestre difficile pour {P} : les notions essentielles ne sont pas acquises.",
-      "{P} est en grande difficulté en SVT ce trimestre.",
-      "Les acquis {deP} restent très insuffisants en SVT.",
-      "Résultats préoccupants pour {P} en SVT.",
-      "Le trimestre {deP} est très insuffisant en SVT.",
-      "{P} n’a pas acquis les bases attendues en SVT.",
-      "Les évaluations {deP} montrent de grosses lacunes en SVT.",
-      "Le niveau {deP} reste très en dessous des attentes en SVT." ],
-    [ "Les résultats {deP} sont fragiles en SVT.",
-      "Trimestre en demi-teinte pour {P} : plusieurs notions ne sont pas encore acquises.",
-      "{P} rencontre des difficultés sur une partie des notions abordées.",
-      "Résultats un peu justes pour {P}, les bases doivent être consolidées.",
-      "{P} n’a pas encore atteint le niveau attendu en SVT.",
-      "Les acquis {deP} restent fragiles en SVT.",
-      "{P} n’atteint pas encore la moyenne en SVT.",
-      "Ensemble encore insuffisant pour {P}, malgré quelques réussites.",
-      "Plusieurs notions échappent encore à {P} en SVT." ],
-    [ "{P} obtient des résultats corrects en SVT.",
-      "Trimestre assez satisfaisant pour {P}, mais les acquis restent à consolider.",
-      "L’essentiel est compris par {P}, mais certaines notions restent fragiles.",
-      "{P} a acquis les bases en SVT et peut encore progresser.",
-      "Ensemble correct pour {P}, avec une marge de progression réelle.",
-      "Résultats tout juste satisfaisants pour {P} en SVT.",
-      "{P} atteint la moyenne, mais peut viser plus haut.",
-      "Le niveau {deP} est correct en SVT, sans plus.",
-      "Les bases sont en place pour {P}, il faut maintenant les consolider." ],
-    [ "{P} obtient de bons résultats en SVT.",
-      "Trimestre satisfaisant pour {P} en SVT.",
-      "Les résultats {deP} sont satisfaisants et les bases sont acquises.",
-      "{P} fournit un travail sérieux qui porte ses fruits.",
-      "Bon ensemble pour {P} en SVT ce trimestre.",
-      "{P} réalise un trimestre sérieux en SVT.",
-      "Les acquis {deP} sont solides dans l’ensemble.",
-      "Résultats satisfaisants pour {P}, qui maîtrise l’essentiel.",
-      "{P} progresse bien et obtient de bons résultats en SVT." ],
-    [ "{P} obtient de très bons résultats en SVT.",
-      "Très bon trimestre pour {P} : les notions sont bien comprises.",
-      "Les résultats {deP} sont très satisfaisants en SVT.",
-      "{P} fournit un travail de qualité et les acquis sont solides.",
-      "Très bon niveau pour {P}, les compétences sont bien maîtrisées.",
-      "Les résultats {deP} sont de très bonne tenue en SVT.",
-      "{P} maîtrise bien les notions du trimestre.",
-      "Très bon travail {deP} en SVT ce trimestre.",
-      "{P} se distingue par la qualité de son travail." ],
-    [ "{P} obtient d’excellents résultats en SVT.",
-      "Excellent trimestre pour {P} en SVT.",
-      "Les résultats {deP} sont excellents : les notions sont parfaitement maîtrisées.",
-      "{P} réalise un très beau parcours en SVT, avec des résultats remarquables.",
-      "Très beau travail {deP} ce trimestre, les compétences sont solidement acquises.",
-      "Les résultats {deP} sont remarquables en SVT.",
-      "Trimestre brillant pour {P} en SVT.",
-      "{P} fait preuve d’une excellente maîtrise des notions.",
-      "Excellent niveau {deP}, avec un travail de grande qualité." ]
+  [
+   "Résultats fragiles en SVT.",
+   "Trimestre en demi-teinte : plusieurs notions restent à acquérir.",
+   "Des difficultés persistent sur une partie des notions.",
+   "Résultats un peu justes, les bases doivent être consolidées.",
+   "Le niveau attendu n’est pas encore atteint en SVT.",
+   "Les acquis restent fragiles ce trimestre.",
+   "La moyenne n’est pas encore atteinte en SVT.",
+   "Ensemble encore insuffisant, malgré quelques réussites."
   ],
-  comp: [
-    [ "L’attitude en classe est exemplaire.",
-      "Le comportement en classe est irréprochable.",
-      "L’écoute et la concentration sont de qualité.",
-      "Le sérieux en classe est appréciable.",
-      "La participation est constructive et le climat de travail excellent.",
-      "Le comportement est exemplaire et la participation de qualité.",
-      "L’attitude est sérieuse et toujours constructive.",
-      "Le travail en classe se fait dans un excellent état d’esprit.",
-      "Comportement irréprochable et très bonne écoute." ],
-    [ "Quelques bavardages sont toutefois à éviter.",
-      "L’attitude est globalement correcte, malgré quelques bavardages.",
-      "La concentration est bonne, même si quelques moments d’inattention apparaissent.",
-      "Le comportement est satisfaisant, quelques distractions ponctuelles mises à part.",
-      "Quelques bavardages ponctuels sont à surveiller.",
-      "L’attitude est bonne, malgré quelques moments de dissipation.",
-      "Quelques distractions sont à éviter pour gagner en concentration.",
-      "Le comportement est correct, même si quelques bavardages persistent." ],
-    [ "Les bavardages sont trop fréquents.",
-      "La concentration est souvent perturbée par des bavardages.",
-      "Des distractions régulières freinent le travail en classe.",
-      "L’attitude doit devenir plus sérieuse : les bavardages sont réguliers.",
-      "Les bavardages réguliers gênent la concentration.",
-      "La concentration manque trop souvent en classe.",
-      "Les distractions sont trop nombreuses pendant le travail.",
-      "L’attention se relâche trop souvent en classe." ],
-    [ "Les bavardages et les distractions nuisent au travail.",
-      "Le manque de concentration et les bavardages répétés pénalisent les apprentissages.",
-      "L’attitude en classe n’est pas satisfaisante : les bavardages sont trop nombreux.",
-      "Les distractions permanentes empêchent un travail efficace.",
-      "Les bavardages fréquents freinent nettement les progrès.",
-      "Le comportement en classe nuit à la qualité du travail.",
-      "Trop de dissipation en classe : l’attitude doit changer.",
-      "La concentration fait souvent défaut à cause des bavardages." ],
-    [ "Le comportement perturbe le déroulement des cours et n’est pas acceptable.",
-      "Les bavardages incessants gênent la classe : un changement d’attitude est indispensable.",
-      "L’attitude en classe est inacceptable et perturbe le travail du groupe.",
-      "Le comportement en classe est très préoccupant et doit changer rapidement.",
-      "Le comportement en classe est inacceptable.",
-      "Les bavardages permanents perturbent toute la classe.",
-      "L’attitude en classe pose un réel problème et doit changer.",
-      "Le comportement empêche le bon déroulement du cours." ]
+  [
+   "Résultats tout juste corrects en SVT.",
+   "La moyenne est atteinte, mais les acquis restent fragiles.",
+   "Trimestre juste : l’essentiel est compris, sans plus.",
+   "Résultats moyens en SVT.",
+   "Résultats tout juste suffisants ce trimestre.",
+   "Niveau encore juste en SVT.",
+   "Ensemble moyen, plusieurs notions restent à consolider.",
+   "Les bases sont acquises, mais le niveau reste juste."
   ],
-  tip: {
-    higood: [ "Continuez ainsi.", "Bravo, poursuivez dans cette voie.", "Félicitations pour ce trimestre très réussi.",
-              "C’est très encourageant pour la suite.", "Un ensemble très positif, à poursuivre.",
-              "Excellent état d’esprit, à conserver.", "Un trimestre très positif.",
-              "Il faut garder ce rythme de travail.", "Tous nos encouragements pour la suite." ],
-    hibad:  [ "Avec plus de concentration, les résultats pourraient être encore meilleurs.",
-              "Dommage : un meilleur comportement permettrait d’aller encore plus loin.",
-              "Les capacités sont là, il faut maintenant soigner l’attitude.",
-              "Le potentiel est réel, mais l’attitude doit progresser.",
-              "Une attitude plus sérieuse permettrait de viser l’excellence.",
-              "Il faut canaliser cette énergie pour progresser encore.",
-              "Dommage que le comportement freine d’aussi bons résultats.",
-              "Plus de sérieux en classe rendrait ce bilan excellent." ],
-    midgood:[ "Il faut poursuivre les efforts pour progresser.", "Un travail plus régulier permettrait d’aller plus loin.",
-              "Les efforts doivent se poursuivre.", "Il faut continuer à s’investir pour consolider les acquis.",
-              "Bon état d’esprit, à poursuivre.", "Il faut garder cet état d’esprit et approfondir le travail.",
-              "Plus de régularité dans les révisions permettrait de progresser.", "Encore un effort pour atteindre un bon niveau.",
-              "Le sérieux est là, il faut maintenant gagner en assurance." ],
-    midbad: [ "Plus de concentration permettrait d’obtenir de meilleurs résultats.", "Il faut gagner en concentration pour progresser.",
-              "Un comportement plus sérieux est nécessaire pour progresser.", "Les résultats progresseront avec une meilleure écoute en classe.",
-              "Moins de bavardages permettrait de progresser nettement.", "Il faut se concentrer davantage pour améliorer les résultats.",
-              "Un meilleur comportement aiderait à franchir un cap.", "Les progrès passeront par plus d’attention en classe." ],
-    logood: [ "Il faut persévérer, les efforts finiront par payer.", "Il ne faut pas se décourager et revoir régulièrement les cours.",
-              "Courage, un travail régulier permettra de progresser.", "Il faut maintenant consolider les bases avec méthode.",
-              "Il ne faut pas hésiter à demander de l’aide en cas de difficulté.", "Il faut revoir les leçons régulièrement pour progresser.",
-              "Le sérieux est là, il faut maintenant gagner en méthode.", "Courage, chaque effort compte.",
-              "Un travail régulier à la maison permettra de combler les lacunes." ],
-    lobad:  [ "Un sursaut est indispensable, en commençant par une meilleure concentration.",
-              "Il faut se mettre au travail sérieusement et cesser les bavardages.",
-              "Un changement d’attitude est nécessaire pour progresser.",
-              "Il faut se ressaisir rapidement, au travail comme en classe.",
-              "Il faut changer d’attitude et se mettre au travail.",
-              "Un comportement plus sérieux est indispensable pour progresser.",
-              "Il faut se reprendre en main sans attendre.",
-              "Concentration et travail sont indispensables pour remonter les résultats." ]
-  }
+  [
+   "Résultats corrects en SVT.",
+   "Trimestre correct en SVT.",
+   "Résultats corrects, les bases sont acquises.",
+   "Ensemble correct, avec une marge de progression réelle.",
+   "Niveau correct en SVT, sans plus.",
+   "L’essentiel est maîtrisé, il est possible de viser plus haut.",
+   "Résultats assez satisfaisants en SVT.",
+   "Acquis corrects dans l’ensemble."
+  ],
+  [
+   "Bons résultats en SVT.",
+   "Bon trimestre en SVT.",
+   "Résultats satisfaisants, les bases sont solides.",
+   "Travail sérieux qui porte ses fruits.",
+   "Bon ensemble ce trimestre en SVT.",
+   "Trimestre sérieux et acquis solides.",
+   "Bonne maîtrise de l’essentiel des notions.",
+   "Bon niveau en SVT ce trimestre."
+  ],
+  [
+   "Très bons résultats en SVT.",
+   "Très bon trimestre : les notions sont bien comprises.",
+   "Résultats très satisfaisants en SVT.",
+   "Travail de qualité et acquis solides.",
+   "Très bon niveau, les compétences sont bien maîtrisées.",
+   "Résultats de très bonne tenue en SVT.",
+   "Très bonne maîtrise des notions du trimestre.",
+   "Très bon travail en SVT ce trimestre."
+  ],
+  [
+   "Excellents résultats en SVT.",
+   "Excellent trimestre en SVT.",
+   "Résultats excellents : les notions sont parfaitement maîtrisées.",
+   "Très beau parcours, avec des résultats remarquables.",
+   "Très beau travail, les compétences sont solidement acquises.",
+   "Résultats remarquables en SVT.",
+   "Trimestre brillant en SVT.",
+   "Excellent niveau et travail de grande qualité."
+  ]
+ ],
+ "res": [
+  [
+   "Les résultats {deP} sont insuffisants en SVT.",
+   "Trimestre difficile pour {P} : les notions essentielles ne sont pas acquises.",
+   "{P} est en grande difficulté en SVT ce trimestre.",
+   "Les acquis {deP} restent très insuffisants en SVT.",
+   "Résultats préoccupants pour {P} en SVT.",
+   "Le trimestre {deP} est très insuffisant en SVT.",
+   "{P} n’a pas acquis les bases attendues en SVT.",
+   "Les évaluations {deP} montrent de grosses lacunes en SVT.",
+   "Le niveau {deP} reste très en dessous des attentes en SVT."
+  ],
+  [
+   "Les résultats {deP} sont fragiles en SVT.",
+   "Trimestre en demi-teinte pour {P} : plusieurs notions ne sont pas encore acquises.",
+   "{P} rencontre des difficultés sur une partie des notions abordées.",
+   "Résultats un peu justes pour {P}, les bases doivent être consolidées.",
+   "{P} n’a pas encore atteint le niveau attendu en SVT.",
+   "Les acquis {deP} restent fragiles en SVT.",
+   "{P} n’atteint pas encore la moyenne en SVT.",
+   "Ensemble encore insuffisant pour {P}, malgré quelques réussites.",
+   "Plusieurs notions échappent encore à {P} en SVT."
+  ],
+  [
+   "Les résultats {deP} sont tout juste corrects en SVT.",
+   "{P} atteint la moyenne en SVT, mais les acquis restent fragiles.",
+   "Trimestre juste pour {P} : l’essentiel est compris, sans plus.",
+   "Résultats moyens pour {P} en SVT.",
+   "{P} obtient des résultats tout juste suffisants en SVT.",
+   "Le niveau {deP} reste juste en SVT.",
+   "Ensemble moyen pour {P}, plusieurs notions restent à consolider.",
+   "{P} a acquis les bases, mais le niveau reste juste.",
+   "Les résultats {deP} sont passables en SVT."
+  ],
+  [
+   "{P} obtient des résultats corrects en SVT.",
+   "Trimestre correct pour {P} en SVT.",
+   "Les résultats {deP} sont corrects, les bases sont acquises.",
+   "Ensemble correct pour {P}, avec une marge de progression réelle.",
+   "Le niveau {deP} est correct en SVT, sans plus.",
+   "{P} maîtrise l’essentiel, mais peut viser plus haut.",
+   "Résultats assez satisfaisants pour {P} en SVT.",
+   "Les acquis {deP} sont corrects dans l’ensemble.",
+   "{P} réalise un trimestre correct, qui peut encore progresser."
+  ],
+  [
+   "{P} obtient de bons résultats en SVT.",
+   "Bon trimestre pour {P} en SVT.",
+   "Les résultats {deP} sont bons et les bases solides.",
+   "{P} fournit un travail sérieux qui porte ses fruits.",
+   "Bon ensemble pour {P} en SVT ce trimestre.",
+   "Les acquis {deP} sont solides dans l’ensemble.",
+   "{P} maîtrise bien l’essentiel des notions du trimestre.",
+   "Résultats satisfaisants pour {P}, avec un bon niveau.",
+   "{P} réalise un bon trimestre en SVT."
+  ],
+  [
+   "{P} obtient de très bons résultats en SVT.",
+   "Très bon trimestre pour {P} : les notions sont bien comprises.",
+   "Les résultats {deP} sont très satisfaisants en SVT.",
+   "{P} fournit un travail de qualité et les acquis sont solides.",
+   "Très bon niveau pour {P}, les compétences sont bien maîtrisées.",
+   "Les résultats {deP} sont de très bonne tenue en SVT.",
+   "Très bon travail {deP} en SVT ce trimestre.",
+   "{P} se distingue par la qualité de son travail.",
+   "{P} maîtrise très bien les notions du trimestre."
+  ],
+  [
+   "{P} obtient d’excellents résultats en SVT.",
+   "Excellent trimestre pour {P} en SVT.",
+   "Les résultats {deP} sont excellents : les notions sont parfaitement maîtrisées.",
+   "{P} réalise un très beau parcours en SVT, avec des résultats remarquables.",
+   "Très beau travail {deP} ce trimestre, les compétences sont solidement acquises.",
+   "Les résultats {deP} sont remarquables en SVT.",
+   "Trimestre brillant pour {P} en SVT.",
+   "{P} fait preuve d’une excellente maîtrise des notions.",
+   "Excellent niveau {deP}, avec un travail de grande qualité."
+  ]
+ ],
+ "comp": [
+  [
+   "L’attitude en classe est exemplaire.",
+   "Le comportement en classe est irréprochable.",
+   "L’écoute et la concentration sont de qualité.",
+   "Le sérieux en classe est appréciable.",
+   "La participation est constructive et le climat de travail excellent.",
+   "Le comportement est exemplaire et la participation de qualité.",
+   "L’attitude est sérieuse et toujours constructive.",
+   "Le travail en classe se fait dans un excellent état d’esprit.",
+   "Comportement irréprochable et très bonne écoute."
+  ],
+  [
+   "Quelques bavardages sont toutefois à éviter.",
+   "L’attitude est globalement correcte, malgré quelques bavardages.",
+   "La concentration est bonne, même si quelques moments d’inattention apparaissent.",
+   "Le comportement est satisfaisant, quelques distractions ponctuelles mises à part.",
+   "Quelques bavardages ponctuels sont à surveiller.",
+   "L’attitude est bonne, malgré quelques moments de dissipation.",
+   "Quelques distractions sont à éviter pour gagner en concentration.",
+   "Le comportement est correct, même si quelques bavardages persistent."
+  ],
+  [
+   "Les bavardages sont trop fréquents.",
+   "La concentration est souvent perturbée par des bavardages.",
+   "Des distractions régulières freinent le travail en classe.",
+   "L’attitude doit devenir plus sérieuse : les bavardages sont réguliers.",
+   "Les bavardages réguliers gênent la concentration.",
+   "La concentration manque trop souvent en classe.",
+   "Les distractions sont trop nombreuses pendant le travail.",
+   "L’attention se relâche trop souvent en classe."
+  ],
+  [
+   "Les bavardages et les distractions nuisent au travail.",
+   "Le manque de concentration et les bavardages répétés pénalisent les apprentissages.",
+   "L’attitude en classe n’est pas satisfaisante : les bavardages sont trop nombreux.",
+   "Les distractions permanentes empêchent un travail efficace.",
+   "Les bavardages fréquents freinent nettement les progrès.",
+   "Le comportement en classe nuit à la qualité du travail.",
+   "Trop de dissipation en classe : l’attitude doit changer.",
+   "La concentration fait souvent défaut à cause des bavardages."
+  ],
+  [
+   "Le comportement perturbe le déroulement des cours et n’est pas acceptable.",
+   "Les bavardages incessants gênent la classe : un changement d’attitude est indispensable.",
+   "L’attitude en classe est inacceptable et perturbe le travail du groupe.",
+   "Le comportement en classe est très préoccupant et doit changer rapidement.",
+   "Le comportement en classe est inacceptable.",
+   "Les bavardages permanents perturbent toute la classe.",
+   "L’attitude en classe pose un réel problème et doit changer.",
+   "Le comportement empêche le bon déroulement du cours."
+  ]
+ ],
+ "tip": {
+  "higood": [
+   "Continuez ainsi.",
+   "Bravo, poursuivez dans cette voie.",
+   "Félicitations pour ce trimestre très réussi.",
+   "C’est très encourageant pour la suite.",
+   "Un ensemble très positif, à poursuivre.",
+   "Excellent état d’esprit, à conserver.",
+   "Un trimestre très positif.",
+   "Il faut garder ce rythme de travail.",
+   "Tous nos encouragements pour la suite."
+  ],
+  "hibad": [
+   "Avec plus de concentration, les résultats pourraient être encore meilleurs.",
+   "Dommage : un meilleur comportement permettrait d’aller encore plus loin.",
+   "Les capacités sont là, il faut maintenant soigner l’attitude.",
+   "Le potentiel est réel, mais l’attitude doit progresser.",
+   "Une attitude plus sérieuse permettrait de viser l’excellence.",
+   "Il faut canaliser cette énergie pour progresser encore.",
+   "Dommage que le comportement freine d’aussi bons résultats.",
+   "Plus de sérieux en classe rendrait ce bilan excellent."
+  ],
+  "midgood": [
+   "Il faut poursuivre les efforts pour progresser.",
+   "Un travail plus régulier permettrait d’aller plus loin.",
+   "Les efforts doivent se poursuivre.",
+   "Il faut continuer à s’investir pour consolider les acquis.",
+   "Bon état d’esprit, à poursuivre.",
+   "Il faut garder cet état d’esprit et approfondir le travail.",
+   "Plus de régularité dans les révisions permettrait de progresser.",
+   "Encore un effort pour atteindre un bon niveau.",
+   "Le sérieux est là, il faut maintenant gagner en assurance."
+  ],
+  "midbad": [
+   "Plus de concentration permettrait d’obtenir de meilleurs résultats.",
+   "Il faut gagner en concentration pour progresser.",
+   "Un comportement plus sérieux est nécessaire pour progresser.",
+   "Les résultats progresseront avec une meilleure écoute en classe.",
+   "Moins de bavardages permettrait de progresser nettement.",
+   "Il faut se concentrer davantage pour améliorer les résultats.",
+   "Un meilleur comportement aiderait à franchir un cap.",
+   "Les progrès passeront par plus d’attention en classe."
+  ],
+  "logood": [
+   "Il faut persévérer, les efforts finiront par payer.",
+   "Il ne faut pas se décourager et revoir régulièrement les cours.",
+   "Courage, un travail régulier permettra de progresser.",
+   "Il faut maintenant consolider les bases avec méthode.",
+   "Il ne faut pas hésiter à demander de l’aide en cas de difficulté.",
+   "Il faut revoir les leçons régulièrement pour progresser.",
+   "Le sérieux est là, il faut maintenant gagner en méthode.",
+   "Courage, chaque effort compte.",
+   "Un travail régulier à la maison permettra de combler les lacunes."
+  ],
+  "lobad": [
+   "Un sursaut est indispensable, en commençant par une meilleure concentration.",
+   "Il faut se mettre au travail sérieusement et cesser les bavardages.",
+   "Un changement d’attitude est nécessaire pour progresser.",
+   "Il faut se ressaisir rapidement, au travail comme en classe.",
+   "Il faut changer d’attitude et se mettre au travail.",
+   "Un comportement plus sérieux est indispensable pour progresser.",
+   "Il faut se reprendre en main sans attendre.",
+   "Concentration et travail sont indispensables pour remonter les résultats."
+  ],
+  "bongood": [
+   "Continuez ainsi.",
+   "Il faut garder ce sérieux.",
+   "Bon trimestre, à poursuivre.",
+   "Avec un peu plus d’approfondissement, un très bon niveau est à portée.",
+   "Il faut maintenir ces efforts.",
+   "C’est encourageant pour la suite.",
+   "Il faut continuer dans cette voie.",
+   "Encore un peu de régularité pour viser plus haut."
+  ],
+  "bonbad": [
+   "Avec plus de concentration, les résultats pourraient être meilleurs.",
+   "Une attitude plus sérieuse permettrait d’aller plus loin.",
+   "Les capacités sont là, il faut maintenant soigner l’attitude.",
+   "Moins de bavardages permettrait de viser plus haut.",
+   "Dommage que le comportement freine ces résultats.",
+   "Il faut canaliser cette énergie pour progresser.",
+   "Un meilleur comportement aiderait à franchir un cap."
+  ]
+ }
 };
-function techLevel(n){ return n>=16?5 : n>=14?4 : n>=12?3 : n>=10?2 : n>=8?1 : 0; }
+/* 0 : <8 · 1 : 8-10 · 2 : 10-12 juste · 3 : 12-14 correct · 4 : 14-16 bien · 5 : 16-18 très bien · 6 : 18+ excellent */
+function techLevel(n){ return n>=18?6 : n>=16?5 : n>=14?4 : n>=12?3 : n>=10?2 : n>=8?1 : 0; }
 function bavOf(s){ const v = +s.bav; return isNaN(v) ? 0 : Math.max(0, Math.min(4, Math.round(v))); }
 function nameForms(p){
   p = String(p||"").trim() || "l’élève";
@@ -1100,7 +1245,7 @@ function nameForms(p){
 }
 function genKeys(s){
   const lv = techLevel(s.techno), bv = bavOf(s);
-  const band = lv>=4 ? "hi" : lv>=2 ? "mid" : "lo";
+  const band = lv>=5 ? "hi" : lv===4 ? "bon" : lv>=2 ? "mid" : "lo";
   return [(isAnon(book()) ? "a" : "r")+lv, "c"+bv, "t"+band+(bv<=1?"good":"bad")];
 }
 /* classe sans prénom : réglage de la classe, sinon d'office au lycée */
